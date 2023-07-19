@@ -19,6 +19,7 @@ const openai = new OpenAIApi(config)
 
 export async function POST(Req){     
    
+    const {messages} =await Req.json()
     const response = await openai.createChatCompletion({
         model: 'gpt-3.5-turbo',
         stream: true,
@@ -27,7 +28,8 @@ export async function POST(Req){
         top_p: 1,
         frequency_penalty: 1,
         presence_penalty: 1,
-        messages:[
+        messages:messages
+        /* [
             {
                 role: 'system',
                 content: 'Comportate como un asistente virtual inteligente que pueda responder preguntas sobre una amplia variedad de temas. Debe ser capaz de comprender y procesar preguntas en lenguaje natural y proporcionar respuestas precisas y relevantes. Debe tener un amplio conocimiento en áreas como ciencia, historia, cultura, deportes, tecnología, salud, entretenimiento y cualquier otro tema de interés general. Utiliza técnicas de procesamiento del lenguaje natural y acceso a fuentes de información confiables para ofrecer respuestas actualizadas y verificadas. El objetivo es que seas un asistente versátil y confiable que pueda proporcionar información útil y resolver las dudas de los usuarios en cualquier área temática'
@@ -46,7 +48,7 @@ export async function POST(Req){
                 content: 'Cuando se creo bogota?'
             },
             
-        ]
+        ] */
     })
     //Transformar la respuesta de OpenAi en un Text-stream
     const stream = OpenAIStream(response)
